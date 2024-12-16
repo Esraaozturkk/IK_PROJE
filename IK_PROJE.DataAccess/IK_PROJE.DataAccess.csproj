@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IK_PROJE.Entity\IK_PROJE.Entity.csproj" />
+  </ItemGroup>
+
 </Project>
