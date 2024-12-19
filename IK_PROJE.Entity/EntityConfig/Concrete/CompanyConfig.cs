@@ -9,15 +9,14 @@ using System.Threading.Tasks;
 
 namespace IK_PROJE.Entity.EntityConfig.Concrete
 {
-    public class ApplicationConfig : BaseConfig<Application>
+    public class CompanyConfig : BaseConfig<Company>
     {
-        public override void Configure(EntityTypeBuilder<Application> builder)
+        public override void Configure(EntityTypeBuilder<Company> builder)
         {
             base.Configure(builder);
-
-            builder.HasOne(p => p.JobPost).WithMany(p => p.Applications).HasForeignKey(p => p.JobPostId);
-            builder.HasOne(p => p.Resume).WithMany(p => p.Applications).HasForeignKey(p => p.ResumeId);
-
+            builder.Property(p => p.CompanyName).HasMaxLength(50);
+            builder.Property(p => p.CompanyName).IsRequired();
+            builder.HasIndex(p => p.CompanyName).IsUnique();
         }
     }
 }

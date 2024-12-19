@@ -10,16 +10,14 @@ namespace IK_PROJE.Entity.Entities.Concrete
 {
     public class JobPost : BaseEntity
     {
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
         public string Title { get; set; }
-
         public string Description { get; set; }
-
         public string Requirements { get; set; }
-
         public decimal Salary { get; set; }
+        public DateOnly CreatedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
-        public DateTime CreatedDate { get; set; }
-
-        public int EmployerId { get; set; } // İş ilanı post eden
+        public ICollection<Application> Applications { get; set; }
     }
 }

@@ -14,19 +14,6 @@ namespace IK_PROJE.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Applications",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ApplicationName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Applications", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Certificate",
                 columns: table => new
                 {
@@ -42,21 +29,16 @@ namespace IK_PROJE.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobPosts",
+                name: "Company",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Requirements = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Salary = table.Column<decimal>(type: "decimal(18,2)", maxLength: 50, nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false),
-                    EmployerId = table.Column<int>(type: "int", maxLength: 50, nullable: false)
+                    CompanyName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobPosts", x => x.Id);
+                    table.PrimaryKey("PK_Company", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,6 +111,30 @@ namespace IK_PROJE.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobPosts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Requirements = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Salary = table.Column<decimal>(type: "decimal(18,2)", maxLength: 50, nullable: false),
+                    CreatedDate = table.Column<DateOnly>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobPosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobPosts_Company_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Company",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -167,6 +173,32 @@ namespace IK_PROJE.DataAccess.Migrations
                         name: "FK_Resume_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Applications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobPostId = table.Column<int>(type: "int", nullable: false),
+                    ResumeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Applications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Applications_JobPosts_JobPostId",
+                        column: x => x.JobPostId,
+                        principalTable: "JobPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Applications_Resume_ResumeId",
+                        column: x => x.ResumeId,
+                        principalTable: "Resume",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -303,12 +335,26 @@ namespace IK_PROJE.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "Name", "Password", "RoleId", "Surname", "TelNo" },
-                values: new object[] { 1, "esra@gmail.com", "Esra", "esra12", 2, "Öztürk", "05031234266" });
+                values: new object[,]
+                {
+                    { 1, "esra@gmail.com", "Esra", "esra12", 1, "Öztürk", "05031234266" },
+                    { 2, "emre@gmail.com", "emre", "qweasd", 2, "andac", "05431234266" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_Id",
                 table: "Applications",
                 column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Applications_JobPostId",
+                table: "Applications",
+                column: "JobPostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Applications_ResumeId",
+                table: "Applications",
+                column: "ResumeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Certificate_Id",
@@ -319,6 +365,22 @@ namespace IK_PROJE.DataAccess.Migrations
                 name: "IX_CertificateResume_resumesId",
                 table: "CertificateResume",
                 column: "resumesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Company_CompanyName",
+                table: "Company",
+                column: "CompanyName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Company_Id",
+                table: "Company",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobPosts_CompanyId",
+                table: "JobPosts",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobPosts_Id",
@@ -413,9 +475,6 @@ namespace IK_PROJE.DataAccess.Migrations
                 name: "CertificateResume");
 
             migrationBuilder.DropTable(
-                name: "JobPosts");
-
-            migrationBuilder.DropTable(
                 name: "ProjectResume");
 
             migrationBuilder.DropTable(
@@ -426,6 +485,9 @@ namespace IK_PROJE.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "ResumeSkills");
+
+            migrationBuilder.DropTable(
+                name: "JobPosts");
 
             migrationBuilder.DropTable(
                 name: "Certificate");
@@ -444,6 +506,9 @@ namespace IK_PROJE.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Skills");
+
+            migrationBuilder.DropTable(
+                name: "Company");
 
             migrationBuilder.DropTable(
                 name: "Users");

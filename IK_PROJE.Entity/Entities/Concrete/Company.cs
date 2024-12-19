@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace IK_PROJE.Entity.Entities.Concrete
 {
-    public class Role : BaseEntity
+    public class Company:BaseEntity
     {
-        public string RoleName { get; set; }
-        public ICollection<MyUser> users { get; set; }
+        public string CompanyName { get; set; }
+        public ICollection<JobPost> JobPosts { get; set; }
     }
 }

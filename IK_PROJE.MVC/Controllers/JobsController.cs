@@ -31,7 +31,6 @@ namespace IKIsAlimSistemi.Controllers
         {
             if (ModelState.IsValid)
             {
-                jobPost.CreatedDate = DateTime.Now;
                 _context.JobPosts.Add(jobPost);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(List));

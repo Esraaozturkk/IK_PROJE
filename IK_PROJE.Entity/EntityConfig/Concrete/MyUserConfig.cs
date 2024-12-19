@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace IK_PROJE.Entity.EntityConfig.Concrete
 {
-    public class UserConfig : BaseConfig<User>
+    public class MyUserConfig : BaseConfig<MyUser>
 
     {
-        public override void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<MyUser> builder)
         {
             base.Configure(builder);
             builder.Property(p => p.Name)
@@ -28,7 +28,9 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
             builder.HasIndex(p => p.TelNo).IsUnique();
 
             builder.HasOne(p => p.roles).WithMany(p => p.users).HasForeignKey(p => p.RoleId);
-            builder.HasData(new User() { Id = 1, Name = "Esra", Surname = "Öztürk", TelNo = "05031234266", Email = "esra@gmail.com", Password = "esra12", RoleId = 2 });
+            builder.HasData(new MyUser() { Id = 1, Name = "Esra", Surname = "Öztürk", TelNo = "05031234266", Email = "esra@gmail.com", Password = "esra12", RoleId = 1 });
+            builder.HasData(new MyUser() { Id = 2, Name = "emre", Surname = "andac", TelNo = "05431234266", Email = "emre@gmail.com", Password = "qweasd", RoleId = 2 });
+
         }
     }
 } 

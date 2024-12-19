@@ -84,13 +84,23 @@
                 <a>Forgot password?</a>
             </div>
             <div class="row">
-                <div class="col-8">
+                <div class="col-10">
                     <div class="">
                         <input asp-for="RememberMe">
                         <label for="remember">Remember Me</label>
                     </div>
                   </div>
             </div>
+            <div>
+                <div class="row">
+                <div class="col-12">
+                        <div class="">
+                    <a asp-controller="Account" asp-action="Register">Üye olun</a>
+                </div>
+                </div>
+            </div>
+            </div>
+
             <button type="submit" class="btn btn-primary w-100">Giriş</button>
         </form>
     </div>

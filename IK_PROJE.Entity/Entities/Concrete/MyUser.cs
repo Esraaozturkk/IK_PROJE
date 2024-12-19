@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IK_PROJE.Entity.Entities.Concrete
 {
-    public class User : BaseEntity
+    public class MyUser : BaseEntity
     {
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -15,7 +15,7 @@ namespace IK_PROJE.Entity.Entities.Concrete
         public string Email { get; set; }
 
         public string Password { get; set; }
-        public int RoleId { get; set; } // Çalışan, Başvuran ve Admin
+        public int RoleId { get; set; } = 2;
         public Role roles { get; set; }
         public ICollection<Resume> resumes { get; set; }
     }

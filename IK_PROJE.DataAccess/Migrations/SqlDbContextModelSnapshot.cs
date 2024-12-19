@@ -45,14 +45,19 @@ namespace IK_PROJE.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("JobPostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResumeId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Id");
+
+                    b.HasIndex("JobPostId");
+
+                    b.HasIndex("ResumeId");
 
                     b.ToTable("Applications");
                 });
@@ -85,6 +90,29 @@ namespace IK_PROJE.DataAccess.Migrations
                     b.ToTable("Certificate");
                 });
 
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyName")
+                        .IsUnique();
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Company");
+                });
+
             modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.JobPost", b =>
                 {
                     b.Property<int>("Id")
@@ -93,18 +121,16 @@ namespace IK_PROJE.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasMaxLength(50)
-                        .HasColumnType("datetime2");
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("CreatedDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("EmployerId")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
 
                     b.Property<string>("Requirements")
                         .IsRequired()
@@ -122,9 +148,84 @@ namespace IK_PROJE.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("Id");
 
                     b.ToTable("JobPosts");
+                });
+
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.MyUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("TelNo")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("TelNo")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "esra@gmail.com",
+                            Name = "Esra",
+                            Password = "esra12",
+                            RoleId = 1,
+                            Surname = "Öztürk",
+                            TelNo = "05031234266"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "emre@gmail.com",
+                            Name = "emre",
+                            Password = "qweasd",
+                            RoleId = 2,
+                            Surname = "andac",
+                            TelNo = "05431234266"
+                        });
                 });
 
             modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Project", b =>
@@ -279,69 +380,6 @@ namespace IK_PROJE.DataAccess.Migrations
                     b.ToTable("Skills");
                 });
 
-            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("TelNo")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("TelNo")
-                        .IsUnique();
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "esra@gmail.com",
-                            Name = "Esra",
-                            Password = "esra12",
-                            RoleId = 2,
-                            Surname = "Öztürk",
-                            TelNo = "05031234266"
-                        });
-                });
-
             modelBuilder.Entity("ProjectResume", b =>
                 {
                     b.Property<int>("projectsId")
@@ -417,18 +455,37 @@ namespace IK_PROJE.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Resume", b =>
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Application", b =>
                 {
-                    b.HasOne("IK_PROJE.Entity.Entities.Concrete.User", "User")
-                        .WithMany("resumes")
-                        .HasForeignKey("UserId")
+                    b.HasOne("IK_PROJE.Entity.Entities.Concrete.JobPost", "JobPost")
+                        .WithMany("Applications")
+                        .HasForeignKey("JobPostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("IK_PROJE.Entity.Entities.Concrete.Resume", "Resume")
+                        .WithMany("Applications")
+                        .HasForeignKey("ResumeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JobPost");
+
+                    b.Navigation("Resume");
                 });
 
-            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.User", b =>
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.JobPost", b =>
+                {
+                    b.HasOne("IK_PROJE.Entity.Entities.Concrete.Company", "Company")
+                        .WithMany("JobPosts")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.MyUser", b =>
                 {
                     b.HasOne("IK_PROJE.Entity.Entities.Concrete.Role", "roles")
                         .WithMany("users")
@@ -437,6 +494,17 @@ namespace IK_PROJE.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("roles");
+                });
+
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Resume", b =>
+                {
+                    b.HasOne("IK_PROJE.Entity.Entities.Concrete.MyUser", "User")
+                        .WithMany("resumes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjectResume", b =>
@@ -499,14 +567,29 @@ namespace IK_PROJE.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Company", b =>
+                {
+                    b.Navigation("JobPosts");
+                });
+
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.JobPost", b =>
+                {
+                    b.Navigation("Applications");
+                });
+
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.MyUser", b =>
+                {
+                    b.Navigation("resumes");
+                });
+
+            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Resume", b =>
+                {
+                    b.Navigation("Applications");
+                });
+
             modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Role", b =>
                 {
                     b.Navigation("users");
-                });
-
-            modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.User", b =>
-                {
-                    b.Navigation("resumes");
                 });
 #pragma warning restore 612, 618
         }

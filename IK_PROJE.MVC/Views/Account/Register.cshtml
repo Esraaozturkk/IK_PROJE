@@ -1,5 +1,58 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using IK_PROJE.MVC.Models.VMs
+@model RegistrationVM
 @{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Responsive Registration Form | CodingLab </title>
+    <link rel="stylesheet" href="~/RegisterTemp/style.css">
+</head>
+<body>
+    <div class="register-body">
+        <div class="container-register">
+            <!-- Title section -->
+            <div class="title">Registration</div>
+            <div class="content">
+                <!-- Registration form -->
+                <form asp-action="Register" method="post">
+                    <div class="user-details">
+                        <!-- Input for Name -->
+                        <div class="input-box">
+                            <span asp-validation-for="Name" class="details">Adınız</span>
+                            <input asp-for="Name" placeholder="Adınızı Giriniz" required>
+                        </div>
+                        <!-- Input for Surname -->
+                        <div class="input-box">
+                            <span asp-validation-for="SurName" class="details">Soyadınız</span>
+                            <input asp-for="SurName" placeholder="Soyadınızı Giriniz" required>
+                        </div>
+                        <!-- Input for Email -->
+                        <div class="input-box">
+                            <span asp-validation-for="Email" class="details">Mailiniz</span>
+                            <input asp-for="Email" type="email" placeholder="Mailinizi Giriniz" required>
+                        </div>
+                        <!-- Input for Phone Number -->
+                        <div class="input-box">
+                            <span asp-validation-for="TelNo" class="details">Telefon Numaranız</span>
+                            <input asp-for="TelNo" placeholder="0(50*)*** ** **" required>
+                        </div>
+                        <!-- Input for Password -->
+                        <div class="input-box">
+                            <span asp-validation-for="Password" class="details">Şifreniz</span>
+                            <input asp-for="Password" type="password" placeholder="Şifrenizi Giriniz" required>
+                        </div>
+                    </div>
+                    <!-- Submit button -->
+                    <div class="button">
+                        <input type="submit" value="Üye Ol">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

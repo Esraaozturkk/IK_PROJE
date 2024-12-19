@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace IK_PROJE.MVC.Controllers
 {
-    public class AccountController(IManager<User> userManager, INotyfService notyfService) : Controller
+    public class AccountController(IManager<MyUser> userManager, INotyfService notyfService) : Controller
     {
         public IActionResult Index()
         {
@@ -73,6 +73,38 @@ namespace IK_PROJE.MVC.Controllers
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
 
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register()
+        {
+            RegistrationVM kayitVM = new RegistrationVM();
+            return View(kayitVM);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult Register(RegistrationVM registrationVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                notyfService.Error("Düzeltilmesi gereken yerler var");
+                return View(registrationVM);
+            }
+
+            MyUser user = new MyUser();
+            user.Name = registrationVM.Name;
+            user.Email = registrationVM.Email;
+            user.Password = registrationVM.Password;
+            user.Surname= registrationVM.SurName;   
+            user.TelNo = registrationVM.TelNo;
+
+            userManager.Create(user);
+
+            notyfService.Success("İşlem Başarılı");
+
+            return RedirectToAction("Login", "Account");
         }
     }
 }

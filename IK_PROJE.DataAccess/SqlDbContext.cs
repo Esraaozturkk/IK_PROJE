@@ -15,7 +15,7 @@ namespace IK_PROJE.DataAccess
         public DbSet<JobPost> JobPosts { get; set; }
         public DbSet<Application> Applications { get; set; }
         
-        public DbSet<User> Users { get; set; }
+        public DbSet<MyUser> Users { get; set; }
 
         public DbSet<Role> Roles { get; set; }
 

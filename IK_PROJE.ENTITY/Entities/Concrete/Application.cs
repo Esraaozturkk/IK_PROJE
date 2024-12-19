@@ -9,6 +9,9 @@ namespace IK_PROJE.Entity.Entities.Concrete
 {
     public class Application : BaseEntity
     {
-        public string ApplicationName { get; set; }
+        public int JobPostId { get; set; }
+        public JobPost JobPost { get; set; }
+        public int  ResumeId { get; set; }
+        public  Resume Resume{ get; set; }
     }
 }
