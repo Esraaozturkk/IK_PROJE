@@ -10,5 +10,6 @@ namespace IK_PROJE.Entity.Entities.Concrete
     public class Skills : BaseEntity
     {
         public string Adi { get; set; }
+        public ICollection<Resume> resumes { get; set; }
     }
 }

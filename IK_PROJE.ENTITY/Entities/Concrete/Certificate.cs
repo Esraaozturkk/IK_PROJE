@@ -9,10 +9,11 @@ namespace IK_PROJE.Entity.Entities.Concrete
 {
     public class Certificate : BaseEntity
     {
-        public int KullanıcıId { get; set; }
+       
         public string Adi { get; set; }
         public string  Kurum { get; set; }
         public DateOnly AlındığıTarih { get; set; }
+        public ICollection<Resume> resumes { get; set; }
 
     }
 

@@ -27,8 +27,8 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
             builder.HasIndex(p => p.Email).IsUnique();
             builder.HasIndex(p => p.TelNo).IsUnique();
 
-
-
+            builder.HasOne(p => p.roles).WithMany(p => p.users).HasForeignKey(p => p.RoleId);
+            builder.HasData(new User() { Id = 1, Name = "Esra", Surname = "Öztürk", TelNo = "05031234266", Email = "esra@gmail.com", Password = "esra12", RoleId = 2 });
         }
     }
-}
+} 

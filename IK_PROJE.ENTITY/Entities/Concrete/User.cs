@@ -15,6 +15,9 @@ namespace IK_PROJE.Entity.Entities.Concrete
         public string Email { get; set; }
 
         public string Password { get; set; }
-        public string RoleId { get; set; } // Çalışan, Başvuran ve Admin
+        public int RoleId { get; set; } // Çalışan, Başvuran ve Admin
+        public Role roles { get; set; }
+        public ICollection<Resume> resumes { get; set; }
     }
+
 }

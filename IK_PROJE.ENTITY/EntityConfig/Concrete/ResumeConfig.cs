@@ -13,7 +13,9 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
     {
         public override void Configure(EntityTypeBuilder<Resume> builder)
         {
+
             base.Configure(builder);
+            builder.HasOne(p=>p.User).WithMany(p=>p.resumes).HasForeignKey(p=>p.UserId);
         }
 
     }

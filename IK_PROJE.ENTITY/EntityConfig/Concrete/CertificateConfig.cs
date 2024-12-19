@@ -23,7 +23,7 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
 
             builder.Property(p => p.Adi).IsRequired();
 
-            builder.Property(p => p.KullanıcıId).HasMaxLength(50);
+          
         }
     }
 }

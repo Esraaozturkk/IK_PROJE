@@ -16,6 +16,8 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
             base.Configure(builder);
             builder.Property(p => p.RoleName)
                 .HasMaxLength(30);
+            builder.HasData(new Role() { Id = 1, RoleName = "Yonetici" });
+            builder.HasData(new Role() { Id = 2, RoleName = "Kullanici" });
         }
     }
 }
