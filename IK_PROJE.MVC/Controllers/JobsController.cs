@@ -1,15 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using IK_PROJE.DataAccess;
 using IK_PROJE.Entity.Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
+using IK_PROJE.MVC.Models.VMs;
+using AspNetCoreHero.ToastNotification.Notyf;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using IK_PROJE.Business.Managers.Abstract;
+using IK_PROJE.Business.Managers.Concrete;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace IKIsAlimSistemi.Controllers
 {
     public class JobsController : Controller
     {
         private readonly SqlDbContext _context;
-
+        private readonly INotyfService notyfService;
+        private readonly IManager<JobPost> jobManager;
+        private readonly JobPostManager jobPostManager;
+        private readonly IManager<Company> companyManager;
         public JobsController(SqlDbContext context)
         {
+            jobPostManager = new JobPostManager();
+
             _context = context;
         }
 
@@ -20,22 +32,40 @@ namespace IKIsAlimSistemi.Controllers
 
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
-            return View();
+            JobPostVM jobPostVM = new JobPostVM();
+            return View(jobPostVM);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(JobPost jobPost)
+        [Authorize]
+
+        public async Task< IActionResult> Create(JobPostVM jobPostVM)
         {
-            if (ModelState.IsValid)
+            var company = await jobPostManager.GetJobPostAsync();
+            ViewBag.Company = company.Select(t => new SelectListItem
             {
-                _context.JobPosts.Add(jobPost);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(List));
+                Text = t.Company,
+                Value = t.Id.ToString()
+            }).ToList();
+
+            if (!ModelState.IsValid)
+            {
+                notyfService.Error("Düzeltilmesi gereken yerler var");
+                return View(jobPostVM);
             }
-            return View(jobPost);
+            JobPost jobPost = new JobPost();
+            jobPost.Title = jobPostVM.Title;
+            jobPost.Description = jobPostVM.Description;
+            jobPost.Requirements = jobPostVM.Requirements;
+            jobPost.Salary = jobPostVM.Salary;
+
+            jobManager.Create(jobPost);
+            notyfService.Success("İşlem Başarılı");
+            return View(jobPostVM);
         }
 
         public IActionResult Details(int id)

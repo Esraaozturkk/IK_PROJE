@@ -15,17 +15,17 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
         {
             base.Configure(builder);
 
-            builder.Property(p => p.Title).HasMaxLength(50);
+            builder.Property(p => p.Title).HasMaxLength(500);
             builder.Property(p => p.Title).IsRequired();
 
 
-            builder.Property(p => p.Description).HasMaxLength(50);
+            builder.Property(p => p.Description).HasMaxLength(500);
             builder.Property(p => p.Description).IsRequired();
 
-            builder.Property(p => p.Requirements).HasMaxLength(50);
+            builder.Property(p => p.Requirements).HasMaxLength(500);
             builder.Property(p => p.Requirements).IsRequired();
 
-            builder.Property(p => p.Salary).HasMaxLength(50);
+            builder.Property(p => p.Salary).HasMaxLength(500);
             builder.Property(p => p.Salary).IsRequired();
 
             builder.HasOne(p => p.Company).WithMany(p => p.JobPosts).HasForeignKey(p => p.CompanyId);

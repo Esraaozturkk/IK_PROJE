@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Add Job Post";
+}
+
+<h2>Add Job Post</h2>
+
+<form id="addJobPostForm">
+    <div>
+        <label for="Title">Job Title</label>
+        <input type="text" id="Title" name="Title" required />
+    </div>
+    <div>
+        <label for="Description">Job Description</label>
+        <textarea id="Description" name="Description" required></textarea>
+    </div>
+    <div>
+        <label for="Requirements">Requirements</label>
+        <textarea id="Requirements" name="Requirements"></textarea>
+    </div>
+    <button type="submit">Post Job</button>
+</form>
+
+<!-- AJAX kodu -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#addJobPostForm").on("submit", function (e) {
+            e.preventDefault();
+
+            const formData = {
+                Title: $("#Title").val(),
+                Description: $("#Description").val(),
+                Requirements: $("#Requirements").val(),
+            };
+
+            $.ajax({
+                url: "/Job/AddJobPost",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        // Gerekirse sayfayı yenileyin
+                    } else {
+                        alert("Error: " + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("Something went wrong: " + error);
+                }
+            });
+        });
+    });
+</script>

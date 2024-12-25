@@ -38,12 +38,9 @@ namespace IK_PROJE.MVC.Controllers
             }
             if (user.RoleId == 1)
             {
-                return RedirectToAction("Hizmetler", "Sayfa");
+                return RedirectToAction("Create", "Jobs");
             }
-            //else if (user.RoleId == 2)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
+            
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier,loginVM.Email)

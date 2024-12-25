@@ -117,10 +117,10 @@ namespace IK_PROJE.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompanyId = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Requirements = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Salary = table.Column<decimal>(type: "decimal(18,2)", maxLength: 50, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Requirements = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Salary = table.Column<decimal>(type: "decimal(18,2)", maxLength: 500, nullable: false),
                     CreatedDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
