@@ -16,6 +16,35 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
             base.Configure(builder);
             builder.Property(p => p.Adi)
                 .HasMaxLength(80);
+            builder.HasData(new Skills()
+            {
+                Id = 1,
+
+                Adi= "CRM SDK"
+
+            });
+            builder.HasData(new Skills()
+            {
+                Id = 2,
+
+                Adi = "C#"
+
+            });
+            builder.HasData(new Skills()
+            {
+                Id = 3,
+
+                Adi = "ASP.NET"
+
+            });
+            builder.HasData(new Skills()
+            {
+                Id = 4,
+
+                Adi = "SQL Database"
+
+            });
+
         }
     }
 }

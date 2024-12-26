@@ -23,7 +23,13 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
 
             builder.Property(p => p.Adi).IsRequired();
 
-          
+            builder.HasData(new Certificate()
+            {
+                Id =1,
+                Adi= "Python programlama sertifikası" ,
+                Kurum="Cisco Networking Academy ",
+                AlındığıTarih= DateOnly.Parse("2024-12-22")
+            });
         }
     }
 }

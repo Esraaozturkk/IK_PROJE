@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IK_PROJE.DataAccess.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20241225193026_mig1")]
+    [Migration("20241226230526_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -91,6 +91,15 @@ namespace IK_PROJE.DataAccess.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Certificate");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Adi = "Python programlama sertifikası",
+                            AlındığıTarih = new DateOnly(2024, 12, 22),
+                            Kurum = "Cisco Networking Academy "
+                        });
                 });
 
             modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Company", b =>
@@ -103,8 +112,8 @@ namespace IK_PROJE.DataAccess.Migrations
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -114,6 +123,43 @@ namespace IK_PROJE.DataAccess.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Company");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyName = "İş Bankası"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CompanyName = "TEV"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CompanyName = "Yapıkredi"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CompanyName = "ZiraatBankası"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CompanyName = "Akbank"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CompanyName = "Baykar"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CompanyName = "Vodafone"
+                        });
                 });
 
             modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.JobPost", b =>
@@ -156,6 +202,18 @@ namespace IK_PROJE.DataAccess.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("JobPosts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyId = 1,
+                            CreatedDate = new DateOnly(2024, 12, 27),
+                            Description = "C# ile eklenti geliştirme ve JavaScript ile kullanıcı arayüzü kodlama deneyimi olan",
+                            Requirements = "Tercihen Web kaynakları, PowerApp uygulamaları ve PowerBI raporları geliştirmede deneyimli olan.",
+                            Salary = 30000.00m,
+                            Title = "Bilgisayar Mühendisi"
+                        });
                 });
 
             modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.MyUser", b =>
@@ -254,6 +312,14 @@ namespace IK_PROJE.DataAccess.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Project");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Açıklama = "C# ile İnsan Kaynakları alanında sadece adminin iş ilanı atacağı bir proje",
+                            Name = "C# ile IK projesi"
+                        });
                 });
 
             modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Reference", b =>
@@ -279,6 +345,14 @@ namespace IK_PROJE.DataAccess.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Reference");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            KurumAdi = "Bahçeşehir Üniversitesi Wissen Akademie",
+                            ReferansAdi = "Adnan Ercan Öztürk"
+                        });
                 });
 
             modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Resume", b =>
@@ -361,6 +435,15 @@ namespace IK_PROJE.DataAccess.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("School");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BolumAdı = "Bilgisayar Mühendisliği",
+                            MezuniyetTürü = "Lisans ",
+                            OkulAdı = "Uludağ Üniversitesi"
+                        });
                 });
 
             modelBuilder.Entity("IK_PROJE.Entity.Entities.Concrete.Skills", b =>
@@ -381,6 +464,28 @@ namespace IK_PROJE.DataAccess.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Adi = "CRM SDK"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Adi = "C#"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Adi = "ASP.NET"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Adi = "SQL Database"
+                        });
                 });
 
             modelBuilder.Entity("ProjectResume", b =>

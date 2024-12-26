@@ -20,5 +20,13 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
                 .HasMaxLength(100);
             builder.Property(p => p.MezuniyetTürü)
                .HasMaxLength(100);
+            builder.HasData(new School()
+            {
+                Id=1,
+               OkulAdı="Uludağ Üniversitesi",
+               BolumAdı="Bilgisayar Mühendisliği",
+               MezuniyetTürü="Lisans "
+               
+            });
         }
     } }

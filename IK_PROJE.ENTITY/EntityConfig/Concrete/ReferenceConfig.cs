@@ -19,6 +19,14 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
                 .HasMaxLength(80);
             builder.Property(p => p.KurumAdi)
                .HasMaxLength(80);
+            builder.HasData(new Reference()
+            {
+                Id =1,
+                ReferansAdi= "Adnan Ercan Öztürk",
+                KurumAdi="Bahçeşehir Üniversitesi Wissen Akademie"
+                
+
+            });
         }
     }
 }

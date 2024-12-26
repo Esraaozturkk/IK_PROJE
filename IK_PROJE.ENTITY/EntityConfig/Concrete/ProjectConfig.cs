@@ -18,6 +18,13 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
                 .HasMaxLength(200);
             builder.Property(p => p.Name)
                 .HasMaxLength(80);
+            builder.HasData(new Project()
+            {
+                Id =1,
+                Name="C# ile IK projesi",
+                Açıklama="C# ile İnsan Kaynakları alanında sadece adminin iş ilanı atacağı bir proje"
+
+            });
         }
     }
 }

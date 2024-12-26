@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace IK_PROJE.MVC.Controllers
 {
-    public class AccountController(IManager<MyUser> userManager, INotyfService notyfService) : Controller
+    public class AccountController(IManager<MyUser> userManager, INotyfService notyfService, IManager<Role> roleManager) : Controller
     {
         public IActionResult Index()
         {
@@ -36,20 +36,19 @@ namespace IK_PROJE.MVC.Controllers
                 notyfService.Error("Email veya Şifre Hatalı");
                 return View();
             }
-            if (user.RoleId == 1)
-            {
-                return RedirectToAction("Create", "Jobs");
-            }
-            
+
+            int roleid = user.RoleId;
+            string role= roleManager.GetById(roleid).RoleName;
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier,loginVM.Email)
+                new Claim(ClaimTypes.NameIdentifier,loginVM.Email),
+                new Claim(ClaimTypes.Role,role)
             };
 
-            //if (user != null)
-            //{
-            //    claims.Add(new Claim("userId", user.Id.ToString()));  // userId'yi claim olarak ekliyoruz
-            //}
+            if (user != null)
+            {
+                claims.Add(new Claim("userId", user.Id.ToString()));  // userId'yi claim olarak ekliyoruz
+            }
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authenticationProperty = new AuthenticationProperties()
@@ -61,6 +60,10 @@ namespace IK_PROJE.MVC.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 userPrincipal, authenticationProperty);
+            if (user.RoleId == 1)
+            {
+                return RedirectToAction("Create", "Jobs");
+            }
 
             return RedirectToAction("Index", "Home"); 
         }

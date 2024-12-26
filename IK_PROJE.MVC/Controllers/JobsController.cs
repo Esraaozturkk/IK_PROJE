@@ -43,14 +43,15 @@ namespace IKIsAlimSistemi.Controllers
         [HttpPost]
         [Authorize]
 
-        public async Task< IActionResult> Create(JobPostVM jobPostVM)
+        public async Task< IActionResult> Create(JobPostVM jobPostVM, int companyId)
         {
-            var company = await jobPostManager.GetJobPostAsync();
-            ViewBag.Company = company.Select(t => new SelectListItem
-            {
-                Text = t.Company,
-                Value = t.Id.ToString()
-            }).ToList();
+            //var company = await jobPostManager.GetJobPostAsync();
+            //ViewBag.Company = company.Select(t => new SelectListItem
+            //{
+            //    Text = t.Company,
+            //    Value = t.Id.ToString()
+            //}).ToList();
+            var company = companyManager.GetAll().FirstOrDefault(p=>p.Id==companyId);
 
             if (!ModelState.IsValid)
             {
@@ -62,6 +63,8 @@ namespace IKIsAlimSistemi.Controllers
             jobPost.Description = jobPostVM.Description;
             jobPost.Requirements = jobPostVM.Requirements;
             jobPost.Salary = jobPostVM.Salary;
+            jobPost.CompanyId = jobPostVM.CompanyId;
+            company.CompanyName = jobPostVM.CompanyName;//Başka tabloda olan companyname i view da göstermeye çalışıyoruz
 
             jobManager.Create(jobPost);
             notyfService.Success("İşlem Başarılı");

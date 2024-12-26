@@ -34,7 +34,7 @@ namespace IK_PROJE.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    CompanyName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -324,6 +324,35 @@ namespace IK_PROJE.DataAccess.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Certificate",
+                columns: new[] { "Id", "Adi", "AlındığıTarih", "Kurum" },
+                values: new object[] { 1, "Python programlama sertifikası", new DateOnly(2024, 12, 22), "Cisco Networking Academy " });
+
+            migrationBuilder.InsertData(
+                table: "Company",
+                columns: new[] { "Id", "CompanyName" },
+                values: new object[,]
+                {
+                    { 1, "İş Bankası" },
+                    { 2, "TEV" },
+                    { 3, "Yapıkredi" },
+                    { 4, "ZiraatBankası" },
+                    { 5, "Akbank" },
+                    { 6, "Baykar" },
+                    { 7, "Vodafone" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Project",
+                columns: new[] { "Id", "Açıklama", "Name" },
+                values: new object[] { 1, "C# ile İnsan Kaynakları alanında sadece adminin iş ilanı atacağı bir proje", "C# ile IK projesi" });
+
+            migrationBuilder.InsertData(
+                table: "Reference",
+                columns: new[] { "Id", "KurumAdi", "ReferansAdi" },
+                values: new object[] { 1, "Bahçeşehir Üniversitesi Wissen Akademie", "Adnan Ercan Öztürk" });
+
+            migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "RoleName" },
                 values: new object[,]
@@ -331,6 +360,27 @@ namespace IK_PROJE.DataAccess.Migrations
                     { 1, "Yonetici" },
                     { 2, "Kullanici" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "School",
+                columns: new[] { "Id", "BolumAdı", "MezuniyetTürü", "OkulAdı" },
+                values: new object[] { 1, "Bilgisayar Mühendisliği", "Lisans ", "Uludağ Üniversitesi" });
+
+            migrationBuilder.InsertData(
+                table: "Skills",
+                columns: new[] { "Id", "Adi" },
+                values: new object[,]
+                {
+                    { 1, "CRM SDK" },
+                    { 2, "C#" },
+                    { 3, "ASP.NET" },
+                    { 4, "SQL Database" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "JobPosts",
+                columns: new[] { "Id", "CompanyId", "CreatedDate", "Description", "Requirements", "Salary", "Title" },
+                values: new object[] { 1, 1, new DateOnly(2024, 12, 27), "C# ile eklenti geliştirme ve JavaScript ile kullanıcı arayüzü kodlama deneyimi olan", "Tercihen Web kaynakları, PowerApp uygulamaları ve PowerBI raporları geliştirmede deneyimli olan.", 30000.00m, "Bilgisayar Mühendisi" });
 
             migrationBuilder.InsertData(
                 table: "Users",

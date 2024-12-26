@@ -5,7 +5,11 @@ namespace IK_PROJE.MVC.Models.VMs
     public class JobPostVM
     {
         [Required(ErrorMessage = "Bu alan boş geçilemez")]
-        public int CompanyId { get; set; }
+        public string CompanyName { get; set; }
+
+        [Required(ErrorMessage = "Bu alan boş geçilemez")]
+        public int  CompanyId { get; set; }
+
 
         [Required(ErrorMessage = "Bu alan boş geçilemez")]
         [MinLength(3, ErrorMessage = "En az 3 karakter olmalıdır")]

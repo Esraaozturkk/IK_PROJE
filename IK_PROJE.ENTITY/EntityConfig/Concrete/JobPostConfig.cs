@@ -29,7 +29,18 @@ namespace IK_PROJE.Entity.EntityConfig.Concrete
             builder.Property(p => p.Salary).IsRequired();
 
             builder.HasOne(p => p.Company).WithMany(p => p.JobPosts).HasForeignKey(p => p.CompanyId);
+
+            builder.HasData(new JobPost()
+            { 
+                Id =1,
+                CompanyId = 1,
+                Title="Bilgisayar Mühendisi",
+            Description= "C# ile eklenti geliştirme ve JavaScript ile kullanıcı arayüzü kodlama deneyimi olan",
+            Requirements= "Tercihen Web kaynakları, PowerApp uygulamaları ve PowerBI raporları geliştirmede deneyimli olan.",
+                Salary=30000.00m
+            });
         }
+
     }
 }
   
