@@ -1,5 +1,7 @@
-﻿using IK_PROJE.DataAccess.Repositories.Abstract;
+﻿using IK_PROJE.Business.Managers.Abstract;
+using IK_PROJE.DataAccess.Repositories.Abstract;
 using IK_PROJE.Entity.Entities.Concrete;
+using IK_PROJE.MVC.Extensions;
 using IK_PROJE.MVC.Models.VMs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,21 +9,25 @@ namespace IK_PROJE.UI.Controllers
 {
     public class ResumeController : Controller
     {
-        private readonly IRepository<Resume> _resumeRepository;
-        private readonly IRepository<Skills> _skillsRepository;
-        private readonly IRepository<Certificate> _certificateRepository;
-        private readonly IRepository<School> _schoolRepository;
-        private readonly IRepository<Project> _projectRepository;
-        private readonly IRepository<Reference> _referenceRepository;
-
+        private readonly IManager<Resume> _resumeRepository;
+        private readonly IManager<Skills> _skillsRepository;
+        private readonly IManager<Certificate> _certificateRepository;
+        private readonly IManager<School> _schoolRepository;
+        private readonly IManager<Project> _projectRepository;
+        private readonly IManager<Reference> _referenceRepository;
+        private readonly IManager<MyUser> _myUserRepository;
         public ResumeController(
-            IRepository<Resume> resumeRepository,
-            IRepository<Skills> skillsRepository,
-            IRepository<Certificate> certificateRepository,
-            IRepository<School> schoolRepository,
-            IRepository<Project> projectRepository,
-            IRepository<Reference> referenceRepository)
+             IManager<Resume> resumeRepository,
+             IManager<Skills> skillsRepository,
+             IManager<Certificate> certificateRepository,
+             IManager<School> schoolRepository,
+             IManager<Project> projectRepository,
+             IManager<Reference> referenceRepository,
+             IManager<MyUser> myUserRepository
+            )
+
         {
+            _myUserRepository = myUserRepository;
             _resumeRepository = resumeRepository;
             _skillsRepository = skillsRepository;
             _certificateRepository = certificateRepository;
@@ -39,10 +45,14 @@ namespace IK_PROJE.UI.Controllers
         [HttpPost]
         public IActionResult Create(CVCreateViewModel model)
         {
-            if (ModelState.IsValid)
+            int userId = User.Identity.GetId();
+            var resume = _resumeRepository.GetAll(p => p.UserId == userId).FirstOrDefault();
+            if (!ModelState.IsValid)
             {
+                return View(model);
+            }
                 // Yeni bir CV oluştur
-                var resume = new Resume
+                 resume = new Resume
                 {
                     //Name = model.Name,
                     //SurName = model.SurName,
@@ -75,10 +85,11 @@ namespace IK_PROJE.UI.Controllers
                 // CV'yi kaydet
                 _resumeRepository.Create(resume);
 
-                return RedirectToAction("Index", "Resume");
-            }
+                return RedirectToAction("Index", "Home");
 
-            return View(model);
+
+
+           
         }
     }
 }
