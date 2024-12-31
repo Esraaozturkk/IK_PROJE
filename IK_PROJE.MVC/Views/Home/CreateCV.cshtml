@@ -1,0 +1,118 @@
+﻿@using IK_PROJE.MVC.Models.VMs
+@model CVCreateViewModel
+@{
+    ViewData["Title"] = "CV Oluştur";
+}
+
+<h2>CV Oluştur</h2>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label>Ad</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label> Soyad</label>
+        <input asp-for="SurName" class="form-control" />
+        <span asp-validation-for="SurName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Yetenekler</label>
+        <textarea asp-for="Skills" class="form-control" placeholder="Yeteneklerinizi virgülle ayırarak yazınız."></textarea>
+        <span asp-validation-for="Skills" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Sertifikalar</label>
+        <div id="certificates-container">
+            <div>
+                <input name="Certificates[0].Name" placeholder="Sertifika Adı" class="form-control" />
+                <input name="Certificates[0].Institution" placeholder="Kurum" class="form-control" />
+                <input type="date" name="Certificates[0].Date" placeholder="Alınma Tarihi" class="form-control" />
+            </div>
+        </div>
+        <button type="button" onclick="addCertificate()">Sertifika Ekle</button>
+    </div>
+
+    <div>
+        <label>Okullar</label>
+        <div id="schools-container">
+            <div>
+                <input name="Schools[0].SchoolName" placeholder="Okul Adı" class="form-control" />
+                <input name="Schools[0].Department" placeholder="Bölüm Adı" class="form-control" />
+                <input name="Schools[0].GraduationType" placeholder="Mezuniyet Türü" class="form-control" />
+            </div>
+        </div>
+        <button type="button" onclick="addSchool()">Okul Ekle</button>
+    </div>
+
+    <div>
+        <label>Projeler</label>
+        <div id="projects-container">
+            <div>
+                <input name="Projects[0].Name" placeholder="Proje Adı" class="form-control" />
+                <textarea name="Projects[0].Description" placeholder="Açıklama" class="form-control"></textarea>
+            </div>
+        </div>
+        <button type="button" onclick="addProject()">Proje Ekle</button>
+    </div>
+
+    <div>
+        <label>Referanslar</label>
+        <div id="references-container">
+            <div>
+                <input name="References[0].Name" placeholder="Referans Adı" class="form-control" />
+                <input name="References[0].Company" placeholder="Kurum Adı" class="form-control" />
+            </div>
+        </div>
+        <button type="button" onclick="addReference()">Referans Ekle</button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>
+
+<script>
+    function addCertificate() {
+        const container = document.getElementById("certificates-container");
+        const index = container.children.length;
+        container.innerHTML += `
+            <div>
+                <input name="Certificates[${index}].Name" placeholder="Sertifika Adı" class="form-control" />
+                <input name="Certificates[${index}].Institution" placeholder="Kurum" class="form-control" />
+                <input type="date" name="Certificates[${index}].Date" placeholder="Alınma Tarihi" class="form-control" />
+            </div>`;
+    }
+
+    function addSchool() {
+        const container = document.getElementById("schools-container");
+        const index = container.children.length;
+        container.innerHTML += `
+            <div>
+                <input name="Schools[${index}].SchoolName" placeholder="Okul Adı" class="form-control" />
+                <input name="Schools[${index}].Department" placeholder="Bölüm Adı" class="form-control" />
+                <input name="Schools[${index}].GraduationType" placeholder="Mezuniyet Türü" class="form-control" />
+            </div>`;
+    }
+
+    function addProject() {
+        const container = document.getElementById("projects-container");
+        const index = container.children.length;
+        container.innerHTML += `
+            <div>
+                <input name="Projects[${index}].Name" placeholder="Proje Adı" class="form-control" />
+                <textarea name="Projects[${index}].Description" placeholder="Açıklama" class="form-control"></textarea>
+            </div>`;
+    }
+
+    function addReference() {
+        const container = document.getElementById("references-container");
+        const index = container.children.length;
+        container.innerHTML += `
+            <div>
+                <input name="References[${index}].Name" placeholder="Referans Adı" class="form-control" />
+                <input name="References[${index}].Company" placeholder="Kurum Adı" class="form-control" />
+            </div>`;
+    }
+</script>
